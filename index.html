@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Preacher — Sermon Companion</title>
+  <meta name="description" content="AI Preacher helps pastors prepare powerful sermons, understand scripture deeply, and preach with boldness.">
+  <link rel="icon" type="image/png" href="https://d2xsxph8kpxj0f.cloudfront.net/310519663122179868/JsGy82xYSyGnJ2D9VyGmKt/ai-preacher-icon-gHZkUKoBwy23jWZmigv9MB.webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <!-- MOBILE HEADER -->
+  <header class="mobile-header">
+    <button class="mobile-menu-btn" onclick="toggleMobileNav()">
+      <span class="material-icons-round">menu</span>
+    </button>
+    <div class="mobile-header-brand">
+      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663122179868/JsGy82xYSyGnJ2D9VyGmKt/ai-preacher-icon-gHZkUKoBwy23jWZmigv9MB.webp" alt="AI Preacher" style="width:28px;height:28px;border-radius:6px;">
+      <span style="font-weight:800;font-size:16px;">AI Preacher</span>
+    </div>
+  </header>
+
+  <!-- SIDEBAR NAV (desktop) -->
+  <nav id="sidebar" class="sidebar">
+    <div class="sidebar-brand">
+      <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663122179868/JsGy82xYSyGnJ2D9VyGmKt/ai-preacher-icon-gHZkUKoBwy23jWZmigv9MB.webp" alt="AI Preacher" class="sidebar-logo">
+      <span class="sidebar-title">AI Preacher</span>
+    </div>
+    <div class="sidebar-nav">
+      <button class="nav-item active" data-page="home" onclick="navigateTo('home')">
+        <span class="material-icons-round">home</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-item" data-page="sermon-builder" onclick="navigateTo('sermon-builder')">
+        <span class="material-icons-round">menu_book</span>
+        <span class="nav-label">Sermon Builder</span>
+      </button>
+      <button class="nav-item" data-page="preach-mode" onclick="navigateTo('preach-mode')">
+        <span class="material-icons-round">mic</span>
+        <span class="nav-label">Preach Mode</span>
+      </button>
+      <button class="nav-item" data-page="confidence-coach" onclick="navigateTo('confidence-coach')">
+        <span class="material-icons-round">person</span>
+        <span class="nav-label">Confidence Coach</span>
+      </button>
+      <button class="nav-item" data-page="devotional" onclick="navigateTo('devotional')">
+        <span class="material-icons-round">favorite</span>
+        <span class="nav-label">Devotional</span>
+      </button>
+      <button class="nav-item" data-page="settings" onclick="navigateTo('settings')">
+        <span class="material-icons-round">settings</span>
+        <span class="nav-label">Settings</span>
+      </button>
+    </div>
+    <div class="sidebar-footer">
+      <p style="font-size:11px;color:var(--text-muted);text-align:center;padding:16px;">All glory to God.<br>Built for Pastor Rick Ibarra.</p>
+    </div>
+  </nav>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="bottom-nav">
+    <button class="bnav-item active" data-page="home" onclick="navigateTo('home')">
+      <span class="material-icons-round">home</span>
+      <span>Home</span>
+    </button>
+    <button class="bnav-item" data-page="sermon-builder" onclick="navigateTo('sermon-builder')">
+      <span class="material-icons-round">menu_book</span>
+      <span>Builder</span>
+    </button>
+    <button class="bnav-item" data-page="preach-mode" onclick="navigateTo('preach-mode')">
+      <span class="material-icons-round">mic</span>
+      <span>Preach</span>
+    </button>
+    <button class="bnav-item" data-page="confidence-coach" onclick="navigateTo('confidence-coach')">
+      <span class="material-icons-round">person</span>
+      <span>Coach</span>
+    </button>
+    <button class="bnav-item" data-page="settings" onclick="navigateTo('settings')">
+      <span class="material-icons-round">settings</span>
+      <span>More</span>
+    </button>
+  </nav>
+
+  <!-- SIDEBAR OVERLAY (mobile) -->
+  <div class="sidebar-overlay" onclick="closeMobileNav()"></div>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" class="main-content">
+    <!-- Pages injected by JS -->
+  </main>
+
+  <!-- WORD HELPER MODAL -->
+  <div id="word-modal" class="modal-overlay" onclick="if(event.target===this)closeWordModal()">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title">Word Helper</h3>
+        <button onclick="closeWordModal()" class="modal-close"><span class="material-icons-round">close</span></button>
+      </div>
+      <div id="word-modal-content" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Retell AI Web SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.7/dist/index.js"></script>
+
+  <!-- App Scripts -->
+  <script src="js/topics.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/pages.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
