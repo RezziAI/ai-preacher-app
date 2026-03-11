@@ -253,28 +253,23 @@ async function startCoachCall() {
   statusDot.className = 'status-dot connecting';
 
   try {
-    // Create web call via server-side proxy to protect API key
-    const response = await fetch('/api/retell/create-call', {
+    // Create web call directly via Retell API (CORS allowed)
+    const response = await fetch('https://api.retellai.com/v2/create-web-call', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Authorization': `Bearer ${RETELL_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({ agent_id: RETELL_AGENT_ID })
     });
 
-    let callData;
-    if (response.ok) {
-      callData = await response.json();
-    } else {
-      // Fallback: direct API call (for development/testing)
-      const directRes = await fetch('https://api.retellai.com/v2/create-web-call', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${RETELL_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ agent_id: RETELL_AGENT_ID })
-      });
-      callData = await directRes.json();
+    if (!response.ok) {
+      const errText = await response.text();
+      console.error('Retell API error:', response.status, errText);
+      throw new Error(`API returned ${response.status}`);
     }
+
+    const callData = await response.json();
 
     if (!callData.access_token) {
       throw new Error('No access token received');
@@ -282,9 +277,14 @@ async function startCoachCall() {
 
     // Initialize Retell Web Client
     if (!retellClient) {
-      // The CDN version exposes it as window.RetellWebClient or window.retellClientSdk
-      const RWC = window.RetellWebClient || (window.retellClientSdk && window.retellClientSdk.RetellWebClient);
-      if (!RWC) throw new Error('Retell SDK not loaded');
+      // Wait for ESM module to load RetellWebClient onto window
+      let RWC = window.RetellWebClient;
+      if (!RWC) {
+        // Give the ESM import a moment to resolve
+        await new Promise(resolve => setTimeout(resolve, 1500));
+        RWC = window.RetellWebClient;
+      }
+      if (!RWC) throw new Error('Retell SDK not loaded. Please refresh the page and try again.');
       retellClient = new RWC();
     }
 

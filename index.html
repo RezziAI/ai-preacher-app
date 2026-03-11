@@ -104,14 +104,26 @@
     </div>
   </div>
 
-  <!-- Retell AI Web SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.7/dist/index.js"></script>
+  <!-- Retell AI Web SDK via ESM importmap -->
+  <script type="importmap">
+  {
+    "imports": {
+      "retell-client-js-sdk": "https://cdn.jsdelivr.net/npm/retell-client-js-sdk@2.0.7/+esm",
+      "eventemitter3": "https://cdn.jsdelivr.net/npm/eventemitter3@5.0.1/+esm",
+      "livekit-client": "https://cdn.jsdelivr.net/npm/livekit-client@2.9.1/+esm"
+    }
+  }
+  </script>
+  <script type="module">
+    import { RetellWebClient } from 'retell-client-js-sdk';
+    window.RetellWebClient = RetellWebClient;
+  </script>
 
   <!-- App Scripts -->
   <script src="js/topics.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/api.js"></script>
   <script src="js/pages.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.js" defer></script>
 </body>
 </html>
